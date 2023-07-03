@@ -12,7 +12,7 @@ BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
 }
 
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC) {
-  pair<int, int> limits = coolingTypeLimits.at(coolingType)
+  pair<int, int> limits = coolingTypeLimits.at(coolingType);
   return inferBreach(temperatureInC, limits.first, limits.second);
 }
 
