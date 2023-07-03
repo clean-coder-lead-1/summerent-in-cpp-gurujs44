@@ -15,7 +15,7 @@ typedef enum {
   TOO_HIGH
 } BreachType;
 
-map<CoolingType,pair<int,int>> coolingTypeLimits=  {{(PASSIVE_COOLING, pair<int, int>(0,35)},
+map<CoolingType,pair<int,int>> coolingTypeLimits=  {{PASSIVE_COOLING, pair<int, int>(0,35)},
                                                     {HI_ACTIVE_COOLING, pair<int, int>(0,45)},
                                                     {MED_ACTIVE_COOLING, pair<int, int>(0,40)}};
 
