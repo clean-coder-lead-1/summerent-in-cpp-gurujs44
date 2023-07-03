@@ -1,5 +1,7 @@
 #include "typewise-alert.h"
 #include <stdio.h>
+#include<map>
+using namespace std;
 
 BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
   if(value < lowerLimit) {
@@ -12,6 +14,12 @@ BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
 }
 
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC) {
+  map<CoolingType,pair<int,int>> coolingTypeLimits;
+
+  coolingTypeLimits.insert(PASSIVE_COOLING,pair<int, int>(0,35));
+  coolingTypeLimits.insert(HI_ACTIVE_COOLING,pair<int, int>(0,45));
+  coolingTypeLimits.insert(MED_ACTIVE_COOLING,pair<int, int>(0,40));
+  
   pair<int, int> limits = coolingTypeLimits.at(coolingType);
   return inferBreach(temperatureInC, limits.first, limits.second);
 }
