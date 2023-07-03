@@ -1,10 +1,6 @@
 #include "typewise-alert.h"
 #include <stdio.h>
 
-coolingTypeLimits.insert(PASSIVE_COOLING,pair<int, int>(0,35));
-coolingTypeLimits.insert(HI_ACTIVE_COOLING,pair<int, int>(0,45));
-coolingTypeLimits.insert(MED_ACTIVE_COOLING,pair<int, int>(0,40));
-
 BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
   if(value < lowerLimit) {
     return TOO_LOW;
