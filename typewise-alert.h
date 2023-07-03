@@ -3,11 +3,6 @@
 #include<map>
 using namespace std;
 
-map<CoolingType,pair<int,int>> coolingTypeLimits;
-coolingTypeLimits.insert(PASSIVE_COOLING,pair<int, int>(0,35));
-coolingTypeLimits.insert(HI_ACTIVE_COOLING,pair<int, int>(0,45));
-coolingTypeLimits.insert(MED_ACTIVE_COOLING,pair<int, int>(0,40));
-
 typedef enum {
   PASSIVE_COOLING,
   HI_ACTIVE_COOLING,
@@ -19,6 +14,11 @@ typedef enum {
   TOO_LOW,
   TOO_HIGH
 } BreachType;
+
+map<CoolingType,pair<int,int>> coolingTypeLimits;
+coolingTypeLimits.insert(PASSIVE_COOLING,pair<int, int>(0,35));
+coolingTypeLimits.insert(HI_ACTIVE_COOLING,pair<int, int>(0,45));
+coolingTypeLimits.insert(MED_ACTIVE_COOLING,pair<int, int>(0,40));
 
 BreachType inferBreach(double value, double lowerLimit, double upperLimit);
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC);
