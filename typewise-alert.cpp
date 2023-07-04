@@ -15,10 +15,9 @@ BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
 
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC) {
   map<CoolingType,pair<int,int>> coolingTypeLimits;
-
-  coolingTypeLimits.insert(PASSIVE_COOLING,pair<int, int>(0,35));
-  coolingTypeLimits.insert(HI_ACTIVE_COOLING,pair<int, int>(0,45));
-  coolingTypeLimits.insert(MED_ACTIVE_COOLING,pair<int, int>(0,40));
+  coolingTypeLimits[PASSIVE_COOLING] = {0, 35};
+  coolingTypeLimits[HI_ACTIVE_COOLING] = {0, 45};
+  coolingTypeLimits[MED_ACTIVE_COOLING] = {0, 40};
   
   pair<int, int> limits = coolingTypeLimits.at(coolingType);
   return inferBreach(temperatureInC, limits.first, limits.second);
