@@ -1,5 +1,7 @@
 #include "typewise-alert.h"
 #include <stdio.h>
+#include<map>
+using namespace std;
 
 BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
   if(value < lowerLimit) {
@@ -11,28 +13,17 @@ BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
   return NORMAL;
 }
 
-BreachType classifyTemperatureBreach(
-    CoolingType coolingType, double temperatureInC) {
-  int lowerLimit = 0;
-  int upperLimit = 0;
-  switch(coolingType) {
-    case PASSIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 35;
-      break;
-    case HI_ACTIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 45;
-      break;
-    case MED_ACTIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 40;
-      break;
-  }
-  return inferBreach(temperatureInC, lowerLimit, upperLimit);
+BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC) {
+  map<CoolingType,pair<int,int>> coolingTypeLimits;
+  coolingTypeLimits[PASSIVE_COOLING] = {0, 35};
+  coolingTypeLimits[HI_ACTIVE_COOLING] = {0, 45};
+  coolingTypeLimits[MED_ACTIVE_COOLING] = {0, 40};
+  
+  pair<int, int> limits = coolingTypeLimits.at(coolingType);
+  return inferBreach(temperatureInC, limits.first, limits.second);
 }
 
-void checkAndAlert(
+BreachType checkAndAlert(
     AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
 
   BreachType breachType = classifyTemperatureBreach(
@@ -47,6 +38,7 @@ void checkAndAlert(
       sendToEmail(breachType);
       break;
   }
+  return breachType;
 }
 
 void sendToController(BreachType breachType) {
@@ -56,16 +48,12 @@ void sendToController(BreachType breachType) {
 
 void sendToEmail(BreachType breachType) {
   const char* recepient = "a.b@c.com";
-  switch(breachType) {
-    case TOO_LOW:
+  if(breachType == TOO_LOW) {
       printf("To: %s\n", recepient);
       printf("Hi, the temperature is too low\n");
-      break;
-    case TOO_HIGH:
+  }
+  else if(breachType == TOO_HIGH) {
       printf("To: %s\n", recepient);
       printf("Hi, the temperature is too high\n");
-      break;
-    case NORMAL:
-      break;
   }
 }
